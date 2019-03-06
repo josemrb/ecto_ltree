@@ -58,7 +58,7 @@ defmodule EctoLtree.LabelTree do
   @doc """
   From internal representation to database.
   """
-  @spec dump(t) :: {:ok, [String.t()]} | :error
+  @spec dump(t) :: {:ok, String.t()} | :error
   def dump(%Ltree{} = label_tree) do
     {:ok, decode(label_tree)}
   end
