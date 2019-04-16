@@ -1,5 +1,7 @@
 defmodule EctoLtree.TestRepo do
-  use Ecto.Repo, otp_app: :ecto_ltree
+  use Ecto.Repo,
+    otp_app: :ecto_ltree,
+    adapter: Ecto.Adapters.Postgres
 
   def config_postgrex() do
     config()

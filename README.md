@@ -7,6 +7,19 @@ A library that provides the necessary modules to support the PostgreSQL’s
 
 ### 1. Add the package to your list of dependencies in `mix.exs`
 
+#### If you are using Elixir >= v1.7 and Ecto ~> 3.1
+
+```elixir
+def deps do
+  [
+    ...
+    {:ecto_ltree, "~> 0.2.0"}
+  ]
+end
+```
+
+#### If you are using Elixir v1.6 and Ecto ~> 2.1
+
 ```elixir
 def deps do
   [
@@ -14,8 +27,8 @@ def deps do
     {:ecto_ltree, "~> 0.1.0"}
   ]
 end
-```
 
+```
 ### 2. Define a type module with our custom extensions
 
 ```elixir
@@ -112,6 +125,6 @@ The documentation can be found at [hexdocs](https://hexdocs.pm/ecto_ltree).
 
 ## Copyright and License
 
-Copyright (c) 2018 Jose Miguel Rivero Bruno
+Copyright (c) 2018-2019 Jose Miguel Rivero Bruno
 
 The source code is licensed under [The MIT License (MIT)](LICENSE.md)
