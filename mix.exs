@@ -47,7 +47,7 @@ defmodule EctoLtree.MixProject do
 
   defp deps do
     [
-      {:ecto, "~> 3.1"},
+      {:ecto, ">= 3.0.0"},
       {:postgrex, ">= 0.0.0"},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},
