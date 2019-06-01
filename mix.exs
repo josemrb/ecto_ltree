@@ -4,7 +4,7 @@ defmodule EctoLtree.MixProject do
   def project do
     [
       app: :ecto_ltree,
-      version: "0.2.0",
+      version: "0.2.1",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -47,7 +47,7 @@ defmodule EctoLtree.MixProject do
 
   defp deps do
     [
-      {:ecto, "~> 3.1"},
+      {:ecto, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},

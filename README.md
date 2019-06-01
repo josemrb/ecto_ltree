@@ -7,7 +7,7 @@ A library that provides the necessary modules to support the PostgreSQL’s
 
 ### 1. Add the package to your list of dependencies in `mix.exs`
 
-#### If you are using Elixir >= v1.7 and Ecto ~> 3.1
+#### If you are using Elixir >= v1.7 and Ecto ~> 3.0
 
 ```elixir
 def deps do
