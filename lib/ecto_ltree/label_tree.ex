@@ -80,6 +80,12 @@ defmodule EctoLtree.LabelTree do
 
   def load(_), do: :error
 
+  @spec equal?(any, any) :: boolean
+  def equal?(a, b), do: a == b
+
+  @spec embed_as(any) :: :dump | :self
+  def embed_as(_), do: :self
+
   @doc """
   Returns the underlying schema type.
   """
