@@ -1,4 +1,5 @@
 # EctoLtree
+[![Hex Version](https://img.shields.io/hexpm/v/ecto_ltree.svg?style=flat)](https://hex.pm/packages/ecto_ltree)
 
 A library that provides the necessary modules to support the PostgreSQL’s
 `ltree` data type with Ecto.
@@ -7,7 +8,18 @@ A library that provides the necessary modules to support the PostgreSQL’s
 
 ### 1. Add the package to your list of dependencies in `mix.exs`
 
-#### If you are using Elixir >= v1.7 and Ecto ~> 3.0
+#### If you are using Elixir >= v1.7 and Ecto ~> 3.2
+
+```elixir
+def deps do
+  [
+    ...
+    {:ecto_ltree, "~> 0.3.0"}
+  ]
+end
+```
+
+#### If you are using Ecto ~> 3.0
 
 ```elixir
 def deps do

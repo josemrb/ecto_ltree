@@ -1,4 +1,7 @@
 defmodule EctoLtree.Item do
+  @moduledoc """
+  Item schema module
+  """
   use Ecto.Schema
   import Ecto.Changeset
   alias EctoLtree.LabelTree, as: Ltree

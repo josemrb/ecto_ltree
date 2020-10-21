@@ -9,9 +9,13 @@ defmodule EctoLtree.LabelTree do
 
   use Ecto.Type
 
-  @type t :: %__MODULE__{labels: [String.t()]}
-  defstruct labels: []
   alias EctoLtree.LabelTree, as: Ltree
+
+  @type t :: %__MODULE__{
+          labels: [String.t()]
+        }
+
+  defstruct labels: []
 
   @labelpath_size_max 2048
 
@@ -85,7 +89,7 @@ defmodule EctoLtree.LabelTree do
   Returns the underlying schema type.
   """
   @spec type() :: :ltree
-  def type(), do: :ltree
+  def type, do: :ltree
 end
 
 defimpl String.Chars, for: EctoLtree.LabelTree do

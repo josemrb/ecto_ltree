@@ -34,6 +34,7 @@ defmodule EctoLtree.MixProject do
 
   defp aliases do
     [
+      "code.qa": ["credo --strict", "format --check-formatted"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
@@ -42,6 +43,7 @@ defmodule EctoLtree.MixProject do
     [
       {:ecto, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
+      {:credo, "~> 1.4.0", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.22", only: :dev, runtime: false},
       {:dialyxir, "~> 1.0.0", only: :dev, runtime: false},
       {:ecto_sql, "~> 3.2", only: :test}

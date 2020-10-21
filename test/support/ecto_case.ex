@@ -14,6 +14,8 @@ defmodule EctoLtree.EctoCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL
+
   using do
     quote do
       alias EctoLtree.TestRepo, as: Repo
@@ -26,10 +28,10 @@ defmodule EctoLtree.EctoCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(EctoLtree.TestRepo)
+    :ok = SQL.Sandbox.checkout(EctoLtree.TestRepo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(EctoLtree.TestRepo, {:shared, self()})
+      SQL.Sandbox.mode(EctoLtree.TestRepo, {:shared, self()})
     end
 
     :ok
