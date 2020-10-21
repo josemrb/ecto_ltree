@@ -9,13 +9,6 @@ defmodule EctoLtree.MixProject do
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
       dialyzer: [flags: [:unmatched_returns, :error_handling, :race_conditions, :underspecs]],
-      test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [
-        coveralls: :test,
-        "coveralls.detail": :test,
-        "coveralls.post": :test,
-        "coveralls.html": :test
-      ],
       description: description(),
       package: package(),
       aliases: aliases(),
@@ -51,8 +44,7 @@ defmodule EctoLtree.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},
-      {:ecto_sql, "~> 3.1", only: :test},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:ecto_sql, "~> 3.1", only: :test}
     ]
   end
 
