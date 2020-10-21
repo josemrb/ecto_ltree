@@ -7,7 +7,8 @@ defmodule EctoLtree.LabelTree do
     * `labels`
   """
 
-  @behaviour Ecto.Type
+  use Ecto.Type
+
   @type t :: %__MODULE__{labels: [String.t()]}
   defstruct labels: []
   alias EctoLtree.LabelTree, as: Ltree
