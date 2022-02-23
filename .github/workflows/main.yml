@@ -32,6 +32,12 @@ jobs:
       - run: mix format --check-formatted
       - run: mix deps.unlock --check-unused
       - run: mix credo --strict --all
+      - name: Cache dialyzer
+        uses: actions/cache@v2
+        with:
+          path: priv/plts
+          key: plts-otp_${{ matrix.otp }}-elixir_${{ matrix.elixir }}
+      - run: mix dialyzer
 
   test:
     runs-on: ${{ matrix.os }}
