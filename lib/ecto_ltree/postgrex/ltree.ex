@@ -28,14 +28,17 @@ defmodule EctoLtree.Postgrex.Ltree do
   # binary to be garbage collected sooner if the copy is going to be kept
   # for a longer period of time. See [`:binary.copy/1`](http://www.erlang.org/doc/man/binary.html#copy-1) for more
   # information.
+  @impl true
   def init(opts) do
     Keyword.get(opts, :decode_copy, :copy)
   end
 
   # Use this extension when `type` from %Postgrex.TypeInfo{} is "ltree"
+  @impl true
   def matching(_state), do: [type: "ltree"]
 
   # Use the text format, "ltree" does not have a binary format.
+  @impl true
   def format(_state), do: :text
 
   # Use quoted expression to encode a string that is the same as
@@ -44,6 +47,7 @@ defmodule EctoLtree.Postgrex.Ltree do
   # value and returns encoded `iodata()`. The first 4 bytes in the
   # `iodata()` must be the byte size of the rest of the encoded data, as a
   # signed 32bit big endian integer.
+  @impl true
   def encode(_state) do
     quote do
       bin when is_binary(bin) ->
@@ -54,6 +58,7 @@ defmodule EctoLtree.Postgrex.Ltree do
   # Use quoted expression to decode the data to a string. Decoding matches
   # on an encoded binary with the same signed 32bit big endian integer
   # length header.
+  @impl true
   def decode(:reference) do
     quote do
       <<len::signed-size(32), bin::binary-size(len)>> ->
