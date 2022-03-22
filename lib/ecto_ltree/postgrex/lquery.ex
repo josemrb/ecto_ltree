@@ -6,14 +6,18 @@ defmodule EctoLtree.Postgrex.Lquery do
 
   @behaviour Postgrex.Extension
 
+  @impl true
   def init(opts) do
     Keyword.get(opts, :decode_copy, :copy)
   end
 
+  @impl true
   def matching(_state), do: [type: "lquery"]
 
+  @impl true
   def format(_state), do: :text
 
+  @impl true
   def encode(_state) do
     quote do
       bin when is_binary(bin) ->
@@ -21,6 +25,7 @@ defmodule EctoLtree.Postgrex.Lquery do
     end
   end
 
+  @impl true
   def decode(:reference) do
     quote do
       <<len::signed-size(32), bin::binary-size(len)>> ->
