@@ -12,8 +12,9 @@ defmodule EctoLtree.PostgrexTest do
     {:ok, _} = Postgrex.query(pid, "INSERT INTO items (path) VALUES ($1)", [path])
     {:ok, result} = Postgrex.query(pid, "SELECT * FROM items", [])
     [[_, result_path]] = result.rows
-    assert(path == result_path)
-    {:ok, _} = Postgrex.query(pid, "TRUNCATE TABLE items", [])
+
+    assert path == result_path
+    assert {:ok, _} = Postgrex.query(pid, "TRUNCATE TABLE items", [])
   end
 
   test "query item", context do
@@ -23,7 +24,8 @@ defmodule EctoLtree.PostgrexTest do
     {:ok, _} = Postgrex.query(pid, "INSERT INTO items (path) VALUES ($1)", [path])
     {:ok, result} = Postgrex.query(pid, "SELECT * FROM items WHERE path <@ $1;", [root])
     [[_, result_path]] = result.rows
-    assert(path == result_path)
-    {:ok, _} = Postgrex.query(pid, "TRUNCATE TABLE items", [])
+
+    assert path == result_path
+    assert {:ok, _} = Postgrex.query(pid, "TRUNCATE TABLE items", [])
   end
 end
