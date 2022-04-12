@@ -4,8 +4,8 @@ defmodule EctoLtree.MixProject do
   def project do
     [
       app: :ecto_ltree,
-      version: "0.3.0",
-      elixir: "~> 1.7",
+      version: "0.4.0",
+      elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
       dialyzer: [flags: [:unmatched_returns, :error_handling, :race_conditions, :underspecs]],
@@ -43,9 +43,9 @@ defmodule EctoLtree.MixProject do
     [
       {:ecto, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
-      {:credo, "~> 1.6.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.22", only: :dev, runtime: false},
-      {:dialyxir, "~> 1.0.0", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.1", only: :dev, runtime: false},
       {:ecto_sql, "~> 3.2", only: :test}
     ]
   end
