@@ -11,11 +11,17 @@ defmodule EctoLtree.LabelTree do
 
   alias EctoLtree.LabelTree, as: Ltree
 
+  @type label :: String.t()
   @type t :: %__MODULE__{
-          labels: [String.t()]
+          labels: [label()]
         }
 
   defstruct labels: []
+
+  @spec init([label()]) :: t()
+  def init(labels) do
+    %__MODULE__{labels: labels}
+  end
 
   @labelpath_size_max 2048
 
@@ -32,7 +38,7 @@ defmodule EctoLtree.LabelTree do
     if Enum.any?(labels_result, fn i -> i == :error end) do
       :error
     else
-      {:ok, %Ltree{labels: Enum.map(labels_result, fn {_k, v} -> v end)}}
+      {:ok, init(Enum.map(labels_result, fn {:ok, v} -> v end))}
     end
   end
 
@@ -45,7 +51,7 @@ defmodule EctoLtree.LabelTree do
   @label_size_max 256
   @label_regex ~r/[A-Za-z0-9_]{1,256}/
 
-  @spec cast_label(String.t()) :: {:ok, String.t()} | :error
+  @spec cast_label(label()) :: {:ok, String.t()} | :error
   defp cast_label(string) when is_binary(string) and byte_size(string) <= @label_size_max do
     string_length = String.length(string)
 
@@ -80,7 +86,7 @@ defmodule EctoLtree.LabelTree do
   """
   @spec load(String.t()) :: {:ok, t} | :error
   def load(labelpath) when is_binary(labelpath) do
-    {:ok, %Ltree{labels: labelpath |> String.split(".")}}
+    {:ok, init(String.split(labelpath, "."))}
   end
 
   def load(_), do: :error
