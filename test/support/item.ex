@@ -13,6 +13,6 @@ defmodule EctoLtree.Item do
 
   def changeset(item, params \\ %{}) do
     item
-    |> cast(params, [:path])
+    |> cast(params, [:path, :paths])
   end
 end
