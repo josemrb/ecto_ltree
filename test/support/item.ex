@@ -8,6 +8,7 @@ defmodule EctoLtree.Item do
 
   schema "items" do
     field(:path, Ltree)
+    field(:paths, {:array, Ltree})
   end
 
   def changeset(item, params \\ %{}) do

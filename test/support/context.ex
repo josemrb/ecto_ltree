@@ -6,9 +6,9 @@ defmodule EctoLtree.TestContext do
   alias EctoLtree.Item
   alias EctoLtree.TestRepo
 
-  def create_item(path) do
+  def create_item(attrs) do
     %Item{}
-    |> Item.changeset(%{path: path})
+    |> Item.changeset(attrs)
     |> TestRepo.insert()
   end
 end

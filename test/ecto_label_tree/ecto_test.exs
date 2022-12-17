@@ -5,11 +5,11 @@ defmodule EctoLtree.EctoTest do
 
   describe "Ecto integration" do
     test "can insert record" do
-      assert {:ok, _schema} = TestContext.create_item("this.is.the.one")
+      assert {:ok, _schema} = TestContext.create_item(%{path: "this.is.the.one"})
     end
 
     test "can load record" do
-      TestContext.create_item("this.is.the.one")
+      TestContext.create_item(%{path: "this.is.the.one"})
 
       assert 0 < Repo.one(from(i in Item, select: count(i.id)))
     end
