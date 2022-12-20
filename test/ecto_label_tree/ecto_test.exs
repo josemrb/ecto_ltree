@@ -6,13 +6,18 @@ defmodule EctoLtree.EctoTest do
   describe "Ecto integration" do
     test "can insert record" do
       path = "this.is.the.one"
-      split_path = String.split(path, ".")
+      {:ok, path_struct} = EctoLtree.LabelTree.cast(path)
       paths = ["this.is.path1", "this.is.path2"]
-      split_paths = Enum.map(paths, &String.split(&1, "."))
+
+      path_structs =
+        Enum.map(paths, fn path ->
+          {:ok, path_struct} = EctoLtree.LabelTree.cast(path)
+          path_struct
+        end)
 
       assert {:ok, schema} = TestContext.create_item(path, paths)
-      assert split_path == schema.path.labels
-      assert split_paths == Enum.map(schema.paths, & &1.labels)
+      assert path_struct == schema.path
+      assert path_structs == schema.paths
     end
 
     test "can load record" do
