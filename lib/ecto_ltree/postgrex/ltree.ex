@@ -16,7 +16,6 @@ defmodule EctoLtree.Postgrex.Ltree do
   @moduledoc """
   This module provides the necessary functions to encode and decode PostgreSQL’s
   `ltree` data type to and from Elixir values.
-
   Implements the Postgrex.Extension behaviour.
   """
 
@@ -33,12 +32,13 @@ defmodule EctoLtree.Postgrex.Ltree do
     Keyword.get(opts, :decode_copy, :copy)
   end
 
-  # Use this extension when `send` from %Postgrex.TypeInfo{} is "ltree_send"
+  # Use this extension when `type` from %Postgrex.TypeInfo{} is "ltree"
   @impl true
-  def matching(_state), do: [send: "ltree_send"]
+  def matching(_state), do: [type: "ltree"]
 
+  # Use the text format, "ltree" does not have a binary format.
   @impl true
-  def format(_state), do: :binary
+  def format(_state), do: :text
 
   # Use quoted expression to encode a string that is the same as
   # postgresql's ltree text format. The quoted expression should contain
@@ -50,11 +50,7 @@ defmodule EctoLtree.Postgrex.Ltree do
   def encode(_state) do
     quote do
       bin when is_binary(bin) ->
-        # ltree binary formats are versioned
-        # see: https://github.com/postgres/postgres/blob/master/contrib/ltree/ltree_io.c
-        version = 1
-        size = byte_size(bin) + 1
-        [<<size::signed-size(32)>>, <<version::int8()>> | bin]
+        [<<byte_size(bin)::signed-size(32)>> | bin]
     end
   end
 
@@ -65,16 +61,14 @@ defmodule EctoLtree.Postgrex.Ltree do
   def decode(:reference) do
     quote do
       <<len::signed-size(32), bin::binary-size(len)>> ->
-        <<_version::binary-size(1), ltree::binary>> = bin
-        ltree
+        bin
     end
   end
 
   def decode(:copy) do
     quote do
       <<len::signed-size(32), bin::binary-size(len)>> ->
-        <<version::binary-size(1), ltree::binary>> = bin
-        :binary.copy(ltree)
+        :binary.copy(bin)
     end
   end
 end

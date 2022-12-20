@@ -12,20 +12,16 @@ defmodule EctoLtree.Postgrex.Lquery do
   end
 
   @impl true
-  def matching(_state), do: [send: "lquery_send"]
+  def matching(_state), do: [type: "lquery"]
 
   @impl true
-  def format(_state), do: :binary
+  def format(_state), do: :text
 
   @impl true
   def encode(_state) do
     quote do
       bin when is_binary(bin) ->
-        # lquery binary formats are versioned
-        # see: https://github.com/postgres/postgres/blob/master/contrib/ltree/ltree_io.c
-        version = 1
-        size = byte_size(bin) + 1
-        [<<size::signed-size(32), version::int8()>> | bin]
+        [<<byte_size(bin)::signed-size(32)>> | bin]
     end
   end
 
@@ -33,16 +29,14 @@ defmodule EctoLtree.Postgrex.Lquery do
   def decode(:reference) do
     quote do
       <<len::signed-size(32), bin::binary-size(len)>> ->
-        <<_version::binary-size(1), lquery::binary>> = bin
-        lquery
+        bin
     end
   end
 
   def decode(:copy) do
     quote do
       <<len::signed-size(32), bin::binary-size(len)>> ->
-        <<_version::binary-size(1), lquery::binary>> = bin
-        :binary.copy(lquery)
+        :binary.copy(bin)
     end
   end
 end

@@ -39,19 +39,29 @@ defmodule EctoLtree.PostgrexTest do
     assert {:ok, _} = Postgrex.query(pid, "TRUNCATE TABLE items", [])
   end
 
-  test "query array of lquery", context do
+  test "lquery array", context do
     pid = context[:pid]
-    paths = ["this.is.path1", "this.is.path2"]
-    lquery = ["*.path1.*", "*.path3.*"]
+    lqueries = ["*.path1.*", "*.path2.*"]
 
-    {:ok, _} = Postgrex.query(pid, "INSERT INTO items (paths) VALUES ($1)", [paths])
+    # encode
+    result = Postgrex.query!(pid, "SELECT $1::lquery[]", [lqueries])
+    assert [[lqueries]] == result.rows
 
-    {:ok, result} =
-      Postgrex.query(pid, "SELECT * FROM items WHERE paths ? $1::lquery[];", [lquery])
+    # decode 
+    result = Postgrex.query!(pid, "SELECT '{*.path1.*,*.path2.*}'::lquery[]", [])
+    assert [[lqueries]] == result.rows
+  end
 
-    [[_, _, result_paths]] = result.rows
+  test "ltree array", context do
+    pid = context[:pid]
+    ltrees = ["this.is.path1", "this.is.path2"]
 
-    assert result_paths == paths
-    assert {:ok, _} = Postgrex.query(pid, "TRUNCATE TABLE items", [])
+    # encode
+    result = Postgrex.query!(pid, "SELECT $1::ltree[]", [ltrees])
+    assert [[ltrees]] == result.rows
+
+    # decode 
+    result = Postgrex.query!(pid, "SELECT '{this.is.path1,this.is.path2}'::ltree[]", [])
+    assert [[ltrees]] == result.rows
   end
 end
