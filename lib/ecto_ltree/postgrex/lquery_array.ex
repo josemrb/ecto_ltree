@@ -31,14 +31,20 @@ defmodule EctoLtree.Postgrex.LqueryArray do
   def decode(:reference) do
     quote do
       <<len::signed-size(32), bin::binary-size(len)>> ->
-        bin |> String.trim_leading("{") |> String.trim("}") |> String.split(",")
+        <<"{", rest::binary>> = bin
+        unquote(__MODULE__).decode(rest, [])
     end
   end
 
   def decode(:copy) do
     quote do
       <<len::signed-size(32), bin::binary-size(len)>> ->
-        :binary.copy(bin) |> String.trim_leading("{") |> String.trim("}") |> String.split(",")
+        <<"{", rest::binary>> = :binary.copy(bin)
+        unquote(__MODULE__).decode(rest, <<>>, [])
     end
   end
+
+  def decode("}", current_elem, acc), do: Enum.reverse([current_elem | acc])
+  def decode(<<",", rest::binary>>, current_elem, acc), do: decode(rest, <<>>, [current_elem | acc])
+  def decode(<<bin, rest::binary>>, current_elem, acc), do: decode(rest, <<current_elem::binary, bin>>, acc)
 end
