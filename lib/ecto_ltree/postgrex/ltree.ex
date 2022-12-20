@@ -16,6 +16,7 @@ defmodule EctoLtree.Postgrex.Ltree do
   @moduledoc """
   This module provides the necessary functions to encode and decode PostgreSQL’s
   `ltree` data type to and from Elixir values.
+
   Implements the Postgrex.Extension behaviour.
   """
 
