@@ -45,6 +45,10 @@ defmodule EctoLtree.Postgrex.LqueryArray do
   end
 
   def decode("}", current_elem, acc), do: Enum.reverse([current_elem | acc])
-  def decode(<<",", rest::binary>>, current_elem, acc), do: decode(rest, <<>>, [current_elem | acc])
-  def decode(<<bin, rest::binary>>, current_elem, acc), do: decode(rest, <<current_elem::binary, bin>>, acc)
+
+  def decode(<<",", rest::binary>>, current_elem, acc),
+    do: decode(rest, <<>>, [current_elem | acc])
+
+  def decode(<<bin, rest::binary>>, current_elem, acc),
+    do: decode(rest, <<current_elem::binary, bin>>, acc)
 end

@@ -11,8 +11,8 @@ defmodule EctoLtree.EctoTest do
       split_paths = Enum.map(paths, &String.split(&1, "."))
 
       assert {:ok, schema} = TestContext.create_item(path, paths)
-      assert split_path  == schema.path.labels
-      assert split_paths  == Enum.map(schema.paths, & &1.labels)
+      assert split_path == schema.path.labels
+      assert split_paths == Enum.map(schema.paths, & &1.labels)
     end
 
     test "can load record" do
