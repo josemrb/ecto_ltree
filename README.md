@@ -46,7 +46,7 @@ end
 ```elixir
 Postgrex.Types.define(
   MyApp.PostgresTypes,
-  [EctoLtree.Postgrex.Lquery, EctoLtree.Postgrex.Ltree] ++ Ecto.Adapters.Postgres.extensions()
+  [EctoLtree.Postgrex.Lquery, EctoLtree.Postgrex.Ltree, EctoLtree.Postgrex.LqueryArray, EctoLtree.Postgrex.LtreeArray] ++ Ecto.Adapters.Postgres.extensions()
 )
 ```
 
@@ -86,6 +86,7 @@ defmodule MyApp.Repo.Migrations.CreateItems do
   def change do
     create table(:items) do
       add :path, :ltree
+      add :paths, {:array, :ltree}
     end
 
     create index(:items, [:path], using: :gist)
@@ -103,11 +104,13 @@ defmodule MyApp.Item do
 
   schema "items" do
     field :path, Ltree
+    field :paths, {:array, Ltree}
+    ]
   end
 
   def changeset(item, params \\ %{}) do
     item
-    |> cast(params, [:path])
+    |> cast(params, [:path, :paths])
   end
 end
 ```
