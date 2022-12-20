@@ -32,7 +32,7 @@ defmodule EctoLtree.Postgrex.LqueryArray do
     quote do
       <<len::signed-size(32), bin::binary-size(len)>> ->
         <<"{", rest::binary>> = bin
-        unquote(__MODULE__).decode(rest, [])
+        unquote(__MODULE__).decode(rest, <<>>, [])
     end
   end
 
